@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NEXORA — a creative studio and graphic design marketplace.">
+  <meta name="theme-color" content="#f5f3ee">
+  <title>Create a design | NEXORA</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <meta name="nexora-api" content="http://localhost:4000">
+</head>
+<body data-nexora-roles="client">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner"><a class="brand" href="../../index.html" aria-label="NEXORA home">NEXORA</a>
+    <nav aria-label="Main navigation">
+      <a href="../client/dashboard.html">Dashboard</a><a href="studio.html">Creative Studio</a><a href="../public/services.html">Find Designers</a><a href="../client/projects.html">Projects</a><a href="../client/messages.html">Messages</a>
+    </nav>
+    <a class="account-link" href="../client/profile.html">My Account</a></div>
+  </header>
+  <main id="main">
+    <section class="form-panel narrow"><p class="eyebrow">NEW DESIGN</p><h1>Set up your canvas</h1><form action="editor.html" method="get"><label for="design-name">Design name</label><input id="design-name" name="design_name" type="text" placeholder="Untitled design" required><label for="canvas-size">Canvas preset</label><select id="canvas-size" name="canvas_size"><option value="custom">Custom dimensions</option><option value="square">Square · 1080 × 1080</option><option value="portrait">Portrait · 1080 × 1350</option><option value="story">Story · 1080 × 1920</option><option value="landscape">Landscape · 1920 × 1080</option><option value="a4">A4 · Print</option></select><div class="form-grid"><div><label for="width">Width (px)</label><input id="width" name="width" type="number" min="1" value="1080"></div><div><label for="height">Height (px)</label><input id="height" name="height" type="number" min="1" value="1080"></div></div><button class="button button-primary" type="submit">Continue to editor</button></form></section>
+  </main>
+  <footer class="site-footer"><p>© 2026 NEXORA. Where creativity meets possibility.</p><nav aria-label="Footer navigation"><a href="../support/help.html">Help</a><a href="../support/terms.html">Terms</a><a href="../support/privacy.html">Privacy</a></nav></footer>
+  <script src="../../assets/js/app.js" defer></script>
+<script src="../../assets/js/core/auth-client.js" defer></script>
+</body>
+</html>

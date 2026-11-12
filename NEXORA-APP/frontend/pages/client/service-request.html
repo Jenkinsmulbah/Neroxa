@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NEXORA — a creative studio and graphic design marketplace.">
+  <meta name="theme-color" content="#f5f3ee">
+  <title>Request a designer | NEXORA</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <meta name="nexora-api" content="http://localhost:4000">
+</head>
+<body data-nexora-roles="client">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner"><a class="brand" href="../../index.html" aria-label="NEXORA home">NEXORA</a>
+    <nav aria-label="Main navigation">
+      <a href="dashboard.html">Dashboard</a><a href="../studio/studio.html">Creative Studio</a><a href="../public/services.html">Find Designers</a><a href="projects.html">Projects</a><a href="messages.html">Messages</a>
+    </nav>
+    <a class="account-link" href="profile.html">My Account</a></div>
+  </header>
+  <main id="main">
+    <section class="form-panel"><p class="eyebrow">PROJECT REQUEST</p><h1>Tell the designer about your project.</h1><p>A clear brief helps a designer understand the work, deliverables, and expectations.</p><form action="projects.html" method="get"><label for="project-title">Project title</label><input id="project-title" name="project_title" type="text" required><label for="design-type">Type of design</label><select id="design-type" name="design_type" required><option value="">Choose a category</option><option>Logo and branding</option><option>Social media graphics</option><option>Poster or flyer</option><option>Illustration</option><option>Packaging</option><option>Other</option></select><label for="brief">Project description</label><textarea id="brief" name="brief" rows="6" placeholder="Describe your goals, audience, style, and required content." required></textarea><div class="form-grid"><div><label for="budget">Estimated budget</label><input id="budget" name="budget" type="number" min="0" step="0.01"></div><div><label for="currency">Currency</label><select id="currency" name="currency"><option value="USD">USD</option><option value="LRD">LRD</option></select></div></div><label for="deadline">Preferred deadline</label><input id="deadline" name="deadline" type="date"><label for="references">Reference links (optional)</label><textarea id="references" name="references" rows="3" placeholder="Paste links to visual references"></textarea><button class="button button-primary" type="submit">Submit project request</button></form><p class="notice">Project requests are not transmitted or stored until backend services are connected.</p></section>
+  </main>
+  <footer class="site-footer"><p>© 2026 NEXORA. Where creativity meets possibility.</p><nav aria-label="Footer navigation"><a href="../support/help.html">Help</a><a href="../support/terms.html">Terms</a><a href="../support/privacy.html">Privacy</a></nav></footer>
+  <script src="../../assets/js/app.js" defer></script>
+<script src="../../assets/js/core/auth-client.js" defer></script>
+</body>
+</html>

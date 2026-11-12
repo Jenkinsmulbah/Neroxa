@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Activate your NEXORA account after application approval."><meta name="theme-color" content="#f5f3ee">
+  <meta name="nexora-api" content="http://localhost:4000">
+  <title>Activate account | NEXORA</title><link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="../../index.html" aria-label="NEXORA home">NEXORA</a><nav aria-label="Main navigation"><a href="../public/services.html">Services</a><a href="../public/how-it-works.html">How it works</a></nav><a class="account-link" href="login.html">Log in</a></div></header>
+  <main id="main"><section class="form-panel narrow"><p class="eyebrow">APPROVED APPLICANTS</p><h1>Activate your account</h1><p>Use the reference number from your approved application and the same email address used when applying. Your account role is assigned from the approved application; it cannot be selected here.</p>
+    <form id="nexora-register-form" novalidate>
+      <label for="application-reference">Approved application reference</label><input id="application-reference" name="application_reference" type="text" placeholder="NX-XXXXXXXX" pattern="NX-[A-Fa-f0-9]{8}" required autocomplete="off">
+      <label for="email">Application email address</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+      <label for="password">Create password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required aria-describedby="password-guidance">
+      <p id="password-guidance" class="form-hint">Use at least 12 characters, including uppercase and lowercase letters, a number and a symbol.</p>
+      <label for="confirm-password">Confirm password</label><input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+      <button class="button button-primary" type="submit">Activate account</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Log in</a>.</p>
+  </section></main>
+  <footer class="site-footer"><p>© 2026 NEXORA. Your Creative Team. One Platform.</p><nav aria-label="Footer navigation"><a href="../support/help.html">Help</a><a href="../support/terms.html">Terms</a><a href="../support/privacy.html">Privacy</a></nav></footer>
+  <script src="../../assets/js/core/auth-client.js" defer></script>
+</body></html>
