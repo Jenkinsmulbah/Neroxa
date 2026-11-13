@@ -63,6 +63,21 @@ function cleanPayload(type: 'client'|'designer', input: unknown) {
 }
 const makeReference = () => `NX-${crypto.randomBytes(5).toString('hex').toUpperCase()}`;
 const hashAccess = (token: string) => crypto.createHash('sha256').update(token).digest('hex');
+function requireReference(value: string | string[] | undefined): string {
+  const result = z.string()
+    .regex(/^NX-[A-F0-9]{10}$/i)
+    .safeParse(value);
+
+  if (!result.success) {
+    throw new HttpError(
+      404,
+      'Application not found or access details are incorrect.',
+      'APPLICATION_NOT_FOUND'
+    );
+  }
+
+  return result.data;
+}
 
 applicantApplicationsRouter.post('/', submissionLimiter, async (req, res, next) => {
   try {
@@ -103,12 +118,12 @@ applicantApplicationsRouter.post('/', submissionLimiter, async (req, res, next) 
 
 applicantApplicationsRouter.post('/:reference/status', trackingLimiter, async (req, res, next) => {
   try {
-    if (!/^NX-[A-F0-9]{10}$/i.test(req.params.reference)) throw new HttpError(404, 'Application not found or access details are incorrect.', 'APPLICATION_NOT_FOUND');
+    const reference = requireReference(req.params.reference);
     const parsed = z.object({ accessToken: z.string().min(30).max(100) }).safeParse(req.body);
     if (!parsed.success) throw new HttpError(422, 'A valid application access code is required.', 'ACCESS_CODE_REQUIRED');
     const result = await pool.query(
       `SELECT id, reference, application_type, status, submitted_at, updated_at, decided_at, applicant_access_token_hash
-       FROM applications WHERE upper(reference) = upper($1) LIMIT 1`, [req.params.reference]
+       FROM applications WHERE upper(reference) = upper($1) LIMIT 1`, [reference]
     );
     const application = result.rows[0];
     const supplied = hashAccess(parsed.data.accessToken);
@@ -127,11 +142,11 @@ applicantApplicationsRouter.post('/:reference/status', trackingLimiter, async (r
 applicantApplicationsRouter.post('/:reference/withdraw', trackingLimiter, async (req, res, next) => {
   const client = await pool.connect();
   try {
-    if (!/^NX-[A-F0-9]{10}$/i.test(req.params.reference)) throw new HttpError(404, 'Application not found or access details are incorrect.', 'APPLICATION_NOT_FOUND');
+    const reference = requireReference(req.params.reference);
     const parsed = z.object({ accessToken: z.string().min(30).max(100), note: z.string().trim().max(500).optional() }).safeParse(req.body);
     if (!parsed.success) throw new HttpError(422, 'Valid application access details are required.', 'INVALID_WITHDRAWAL_REQUEST');
     await client.query('BEGIN');
-    const found = await client.query(`SELECT id, status, applicant_access_token_hash FROM applications WHERE upper(reference) = upper($1) FOR UPDATE`, [req.params.reference]);
+    const found = await client.query(`SELECT id, status, applicant_access_token_hash FROM applications WHERE upper(reference) = upper($1) FOR UPDATE`, [reference]);
     const app = found.rows[0];
     const supplied = hashAccess(parsed.data.accessToken);
     const stored = app?.applicant_access_token_hash || '0'.repeat(64);
@@ -142,7 +157,7 @@ applicantApplicationsRouter.post('/:reference/withdraw', trackingLimiter, async 
     await client.query(`INSERT INTO application_status_history (application_id, from_status, to_status, actor_user_id, actor_kind, note) VALUES ($1,$2,'Withdrawn',NULL,'applicant',$3)`, [app.id, app.status, parsed.data.note || 'Applicant withdrew the application.']);
     await client.query(`INSERT INTO audit_logs (action,target_type,target_id,metadata) VALUES ('APPLICATION_WITHDRAWN','application',$1,'{}'::jsonb)`, [app.id]);
     await client.query('COMMIT');
-    res.json({ reference: req.params.reference.toUpperCase(), status: 'Withdrawn' });
+    res.json({ reference: reference.toUpperCase(), status: 'Withdrawn' });
   } catch (error) { await client.query('ROLLBACK').catch(() => undefined); next(error); }
   finally { client.release(); }
 });
