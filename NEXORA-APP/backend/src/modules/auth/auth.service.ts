@@ -63,7 +63,7 @@ export async function recordLogin(userId: string, reqMeta: { ip?: string; userAg
   await pool.query('UPDATE users SET last_login_at = now(), updated_at = now() WHERE id = $1', [userId]);
   await pool.query(
     `INSERT INTO audit_logs (actor_user_id, action, target_type, target_id, metadata)
-     VALUES ($1, 'AUTHENTICATION_SUCCEEDED', 'user', $1, jsonb_build_object('ip', $2, 'userAgent', $3))`,
+     VALUES ($1, 'AUTHENTICATION_SUCCEEDED', 'user', $1, jsonb_build_object('ip', $2::text, 'userAgent', $3::text))`,
     [userId, reqMeta.ip || null, reqMeta.userAgent || null]
   );
 }

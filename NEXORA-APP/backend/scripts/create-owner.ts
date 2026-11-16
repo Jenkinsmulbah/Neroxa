@@ -16,7 +16,7 @@ async function main() {
       VALUES(lower($1),$2,$3,'admin','active','verified') RETURNING id,email`, [email,name,hash]);
     await db.query('INSERT INTO owner_configuration(singleton,owner_user_id) VALUES(TRUE,$1)', [created.rows[0].id]);
     await db.query(`INSERT INTO audit_logs(actor_user_id,action,target_type,target_id,metadata)
-      VALUES($1,'OWNER_BOOTSTRAPPED','user',$1,jsonb_build_object('email',$2))`, [created.rows[0].id,email]);
+      VALUES($1,'OWNER_BOOTSTRAPPED','user',$1,jsonb_build_object('email',$2::text))`, [created.rows[0].id,email]);
     await db.query('COMMIT');
     console.log(`NEXORA Owner account provisioned for ${email}. Remove OWNER_PASSWORD from the environment.`);
   } catch (e) { await db.query('ROLLBACK').catch(()=>undefined); throw e; }

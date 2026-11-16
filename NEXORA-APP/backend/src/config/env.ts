@@ -12,7 +12,7 @@ const schema = z.object({
   SESSION_MAX_AGE_HOURS: z.coerce.number().int().min(1).max(168).default(12)
 }).superRefine((value, ctx) => {
   if (value.NODE_ENV === 'production' && value.COOKIE_SECURE !== 'true') {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['COOKIE_SECURE'], message: 'COOKIE_SECURE must be true in production.' });
+    ctx.addIssue({ code: "custom", path: ['COOKIE_SECURE'], message: 'COOKIE_SECURE must be true in production.' });
   }
 });
 
