@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const API = document.querySelector('meta[name="nexora-api"]')?.content || 'http://localhost:4000';
+  const API = document.querySelector('meta[name="nexora-api"]')?.content || 'https://neroxa.onrender.com';
   const request = async (path, options = {}) => {
     const response = await fetch(`${API}${path}`, { credentials: 'include', ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
     const data = response.status === 204 ? null : await response.json().catch(() => ({}));

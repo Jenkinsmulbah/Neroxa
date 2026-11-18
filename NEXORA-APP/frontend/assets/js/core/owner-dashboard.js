@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const API = document.querySelector('meta[name="nexora-api"]')?.content || 'http://localhost:4000';
+  const API = document.querySelector('meta[name="nexora-api"]')?.content || 'https://neroxa.onrender.com';
   const $ = (id) => document.getElementById(id);
   let permissionCatalog = [];
   const showMessage = (text, kind = '') => { const box = $('owner-message'); box.hidden = false; box.textContent = text; box.className = `owner-message ${kind}`; };

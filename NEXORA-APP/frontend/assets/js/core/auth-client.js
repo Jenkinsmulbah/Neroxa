@@ -2,7 +2,7 @@
    all authorization decisions must still be enforced by the API. */
 (() => {
   'use strict';
-  const API = document.querySelector('meta[name="nexora-api"]')?.content || 'http://localhost:4000';
+  const API = document.querySelector('meta[name="nexora-api"]')?.content || 'https://neroxa.onrender.com';
   const page = location.pathname.split('/').pop();
   const protectedRoles = (document.body.dataset.nexoraRoles || '').split(',').map(role => role.trim()).filter(Boolean);
   const protectedPage = protectedRoles.length > 0;
